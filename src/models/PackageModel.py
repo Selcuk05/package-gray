@@ -128,76 +128,6 @@ class PackageGrayExecutor(Config):
 #############################################3
 
 
-'''
-class OutputImage(Output):
-    name: Literal["outputImage"] = "outputImage"
-    value: Union[List[Image],Image]
-    type: str = "object"
-
-    @validator("type", pre=True, always=True)
-    def set_type_based_on_value(cls, value, values):
-        value = values.get('value')
-        if isinstance(value, Image):
-            return "object"
-        elif isinstance(value, list):
-            return "list"
-
-    class Config:
-        title = "Image"
-
-
-class KeepSideFalse(Config):
-    name: Literal["False"] = "False"
-    value: Literal[False] = False
-    type: Literal["bool"] = "bool"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "Disable"
-
-
-class KeepSideTrue(Config):
-    name: Literal["True"] = "True"
-    value: Literal[True] = True
-    type: Literal["bool"] = "bool"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "Enable"
-
-
-class KeepSideBBox(Config):
-    """
-        Rotate image without catting off sides.
-    """
-    name: Literal["KeepSide"] = "KeepSide"
-    value: Union[KeepSideTrue, KeepSideFalse]
-    type: Literal["object"] = "object"
-    field: Literal["dropdownlist"] = "dropdownlist"
-
-    class Config:
-        title = "Keep Sides"
-
-
-class Degree(Config):
-    """
-        Positive angles specify counterclockwise rotation while negative angles indicate clockwise rotation.
-    """
-    name: Literal["Degree"] = "Degree"
-    value: int = Field(ge=-359.0, le=359.0,default=0)
-    type: Literal["number"] = "number"
-    field: Literal["textInput"] = "textInput"
-    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
-
-    class Config:
-        title = "Angle"'''
-
-
-class PackageGrayExecutorTwoInputs(Inputs):
-    inputImage1: InputImage
-    inputImage2: InputImage
-
-
 class FontSize(Config):
     name: Literal["FontSize"] = "FontSize"
     value: int = Field(ge=0, le=40,default=15)
@@ -207,6 +137,10 @@ class FontSize(Config):
 
     class Config:
         title = "Font Size"
+
+class PackageGrayExecutorTwoInputs(Inputs):
+    inputImage1: InputImage
+    inputImage2: InputImage
 
 class PackageGrayExecutorTwoConfigs(Configs):
     fontSize: FontSize
@@ -237,12 +171,12 @@ class PackageGrayExecutorTwo(Config):
     field: Literal["option"] = "option"
 
     class Config:
-        title = "PackageGray"
-        json_schema_extra = {
+        title = "PackageGray2"
+        """json_schema_extra = {
             "target": {
                 "value": 0
             }
-        }
+        }"""
 ###########################################
 
 class ConfigExecutor(Config):
