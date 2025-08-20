@@ -1,12 +1,12 @@
 import setuptools
 
 setuptools.setup(
-    name="package",
+    name="package-gray",
     version="0.0.1",
-    author="DigiNova",
-    author_email='info@diginova.com.tr',
-    description="Package",
-    url='https://github.com/novavision-ai/package',
+    author="Selcuk Oz",
+    author_email='selcuk_45@protonmail.com',
+    description="PackageGray",
+    url='https://github.com/Selcuk05/package-gray',
     license='MIT',
     install_requires=['sdk', 'opencv-python-headless'],
 

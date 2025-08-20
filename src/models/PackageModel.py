@@ -85,22 +85,22 @@ class Degree(Config):
         title = "Angle"
 
 
-class PackageInputs(Inputs):
+class PackageGrayExecutorInputs(Inputs):
     inputImage: InputImage
 
 
-class PackageConfigs(Configs):
+class PackageGrayExecutorConfigs(Configs):
     degree: Degree
     drawBBox: KeepSideBBox
 
 
-class PackageOutputs(Outputs):
+class PackageGrayExecutorOutputs(Outputs):
     outputImage: OutputImage
 
 
-class PackageRequest(Request):
-    inputs: Optional[PackageInputs]
-    configs: PackageConfigs
+class PackageGrayExecutorRequest(Request):
+    inputs: Optional[PackageGrayExecutorInputs]
+    configs: PackageGrayExecutorConfigs
 
     class Config:
         json_schema_extra = {
@@ -108,36 +108,154 @@ class PackageRequest(Request):
         }
 
 
-class PackageResponse(Response):
-    outputs: PackageOutputs
+class PackageGrayExecutorResponse(Response):
+    outputs: PackageGrayExecutorOutputs
 
-
-class PackageExecutor(Config):
-    name: Literal["Package"] = "Package"
-    value: Union[PackageRequest, PackageResponse]
+### PACKAGE GRAY EXECUTOR 1
+class PackageGrayExecutor(Config):
+    name: Literal["PackageGrayExecutor"] = "PackageGrayExecutor"
+    value: Union[PackageGrayExecutorRequest, PackageGrayExecutorResponse]
     type: Literal["object"] = "object"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "Package"
+        title = "PackageGray"
         json_schema_extra = {
             "target": {
                 "value": 0
             }
         }
+#############################################3
 
+
+'''
+class OutputImage(Output):
+    name: Literal["outputImage"] = "outputImage"
+    value: Union[List[Image],Image]
+    type: str = "object"
+
+    @validator("type", pre=True, always=True)
+    def set_type_based_on_value(cls, value, values):
+        value = values.get('value')
+        if isinstance(value, Image):
+            return "object"
+        elif isinstance(value, list):
+            return "list"
+
+    class Config:
+        title = "Image"
+
+
+class KeepSideFalse(Config):
+    name: Literal["False"] = "False"
+    value: Literal[False] = False
+    type: Literal["bool"] = "bool"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "Disable"
+
+
+class KeepSideTrue(Config):
+    name: Literal["True"] = "True"
+    value: Literal[True] = True
+    type: Literal["bool"] = "bool"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "Enable"
+
+
+class KeepSideBBox(Config):
+    """
+        Rotate image without catting off sides.
+    """
+    name: Literal["KeepSide"] = "KeepSide"
+    value: Union[KeepSideTrue, KeepSideFalse]
+    type: Literal["object"] = "object"
+    field: Literal["dropdownlist"] = "dropdownlist"
+
+    class Config:
+        title = "Keep Sides"
+
+
+class Degree(Config):
+    """
+        Positive angles specify counterclockwise rotation while negative angles indicate clockwise rotation.
+    """
+    name: Literal["Degree"] = "Degree"
+    value: int = Field(ge=-359.0, le=359.0,default=0)
+    type: Literal["number"] = "number"
+    field: Literal["textInput"] = "textInput"
+    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
+
+    class Config:
+        title = "Angle"'''
+
+
+class PackageGrayExecutorTwoInputs(Inputs):
+    inputImage1: InputImage
+    inputImage2: InputImage
+
+
+class FontSize(Config):
+    name: Literal["FontSize"] = "FontSize"
+    value: int = Field(ge=0, le=40,default=15)
+    type: Literal["number"] = "number"
+    field: Literal["textInput"] = "textInput"
+    placeHolder: Literal["[0, 40]"] = "[0, 40]"
+
+    class Config:
+        title = "Font Size"
+
+class PackageGrayExecutorTwoConfigs(Configs):
+    fontSize: FontSize
+
+
+class PackageGrayExecutorTwoOutputs(Outputs):
+    outputImage: OutputImage
+
+
+class PackageGrayExecutorTwoRequest(Request):
+    inputs: Optional[PackageGrayExecutorInputs]
+    configs: PackageGrayExecutorConfigs
+
+    class Config:
+        json_schema_extra = {
+            "target": "configs"
+        }
+
+
+class PackageGrayExecutorTwoResponse(Response):
+    outputs: PackageGrayExecutorOutputs
+
+### PACKAGE GRAY EXECUTOR 2
+class PackageGrayExecutorTwo(Config):
+    name: Literal["PackageGrayExecutorTwo"] = "PackageGrayExecutorTwo"
+    value: Union[PackageGrayExecutorTwoRequest, PackageGrayExecutorTwoResponse]
+    type: Literal["object"] = "object"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "PackageGray"
+        json_schema_extra = {
+            "target": {
+                "value": 0
+            }
+        }
+###########################################
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[PackageExecutor]
+    value: Union[PackageGrayExecutor, PackageGrayExecutorTwo]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
     class Config:
         title = "Task"
-        json_schema_extra = {
+        """json_schema_extra = {
             "target": "value"
-        }
+        }""" ## do not use in multi executor!!
 
 
 class PackageConfigs(Configs):
@@ -146,5 +264,5 @@ class PackageConfigs(Configs):
 
 class PackageModel(Package):
     configs: PackageConfigs
-    type: Literal["component"] = "component"
-    name: Literal["Package"] = "Package"
+    type: Literal["capsule"] = "capsule"
+    name: Literal["PackageGray"] = "PackageGray"
