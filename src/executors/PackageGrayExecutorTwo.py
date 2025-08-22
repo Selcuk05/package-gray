@@ -51,7 +51,8 @@ class PackageGrayTwo(Component):
         img1.value = self.merge_imgs(img1.value, img2.value)
         img1.value = self.apply_text(img1.value)
 
-        self.image1 = Image.set_frame(img=img1, package_uID=self.uID, redis_db=self.redis_db)
+        self.image1 = Image.set_frame(img=img1, package_uID=self.uID, redis_db=self.redis_db) # for video view
+        self.image2 = Image.set_frame(img=img1, package_uID=self.uID, redis_db=self.redis_db) # for file save
         packageModel = build_response_two(context=self)
         return packageModel
 
