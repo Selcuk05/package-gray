@@ -130,7 +130,7 @@ class PackageGrayExecutor(Config):
 #############################################3
 
 class InputImage1(Input):
-    name: Literal["inputImage"] = "inputImage1"
+    name: Literal["inputImage1"] = "inputImage1"
     value: Union[List[Image], Image]
     type: str = "object"
 
@@ -146,7 +146,7 @@ class InputImage1(Input):
         title = "Image 1"
 
 class InputImage2(Input):
-    name: Literal["inputImage"] = "inputImage2"
+    name: Literal["inputImage2"] = "inputImage2"
     value: Union[List[Image], Image]
     type: str = "object"
 
