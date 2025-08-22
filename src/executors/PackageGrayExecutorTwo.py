@@ -20,6 +20,7 @@ class PackageGrayTwo(Component):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
         self.font_size = self.request.get_param('FontSize')
+        self.thickness = self.request.get_param('Thickness')
 
         self.image1 = self.request.get_param("inputImage1")
         self.image2 = self.request.get_param("inputImage2")
@@ -39,7 +40,7 @@ class PackageGrayTwo(Component):
             cv2.FONT_HERSHEY_SIMPLEX,
             self.font_size,
             (255, 255, 255),
-            2,
+            self.thickness,
             cv2.LINE_AA
         )
         return img

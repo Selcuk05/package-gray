@@ -187,12 +187,52 @@ class FontSize(Config):
     class Config:
         title = "Font Size"
 
+### dependent dropdown thickness
+class Thickness1(Config):
+    name: Literal["Thickness1"] = "Thickness1"
+    value: Literal[1] = 1
+    type: Literal["int"] = "int"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "1"
+
+class Thickness2(Config):
+    name: Literal["Thickness2"] = "Thickness2"
+    value: Literal[2] = 2
+    type: Literal["int"] = "int"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "2"
+
+class Thickness3(Config):
+    name: Literal["Thickness3"] = "Thickness3"
+    value: Literal[3] = 3
+    type: Literal["int"] = "int"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "3"
+
+class Thickness(Config):
+    name: Literal["Thickness"] = "Thickness"
+    value: Union[Thickness1, Thickness2, Thickness3]
+    type: Literal["object"] = "object"
+    field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
+    restart: Literal[True] = True
+
+    class Config:
+        title = "Thickness"
+
+
 class PackageGrayExecutorTwoInputs(Inputs):
     inputImage1: InputImage1
     inputImage2: InputImage2
 
 class PackageGrayExecutorTwoConfigs(Configs):
     fontSize: FontSize
+    thickness: Thickness
 
 
 class PackageGrayExecutorTwoOutputs(Outputs):
