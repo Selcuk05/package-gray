@@ -125,6 +125,8 @@ class PackageGrayExecutor(Config):
                 "value": 0
             }
         }
+
+"""
 #############################################3
 
 
@@ -172,16 +174,17 @@ class PackageGrayExecutorTwo(Config):
 
     class Config:
         title = "PackageGray2"
-        """json_schema_extra = {
+        '''json_schema_extra = {
             "target": {
                 "value": 0
             }
-        }"""
+        }'''
 ###########################################
+"""
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[PackageGrayExecutor, PackageGrayExecutorTwo]
+    value: Union[PackageGrayExecutor]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
