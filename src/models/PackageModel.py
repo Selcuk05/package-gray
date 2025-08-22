@@ -37,6 +37,34 @@ class OutputImage(Output):
     class Config:
         title = "Image"
 
+class ColorBGR2GRAY(Config):
+    name: Literal["ColorBGR2GRAY"] = "ColorBGR2GRAY"
+    value: Literal["COLOR_BGR2GRAY"] = "COLOR_BGR2GRAY"
+    type: Literal["string"] = "string"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "BGR => GRAY"
+
+class ColorGRAY2BGR(Config):
+    name: Literal["ColorGRAY2BGR"] = "ColorGRAY2BGR"
+    value: Literal["COLOR_GRAY2BGR"] = "COLOR_GRAY2BGR"
+    type: Literal["string"] = "string"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "GRAY => BGR"
+
+class ColorConversion(Config):
+    name: Literal["ColorConversion"] = "ColorConversion"
+    value: Union[ColorBGR2GRAY, ColorGRAY2BGR]
+    type: Literal["object"] = "object"
+    field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
+    restart: Literal[True] = True
+
+    class Config:
+        title = "Color Conversion"
+
 
 class KeepSideFalse(Config):
     name: Literal["False"] = "False"
@@ -92,6 +120,7 @@ class PackageGrayExecutorInputs(Inputs):
 class PackageGrayExecutorConfigs(Configs):
     degree: Degree
     drawBBox: KeepSideBBox
+    colorConversion: ColorConversion
 
 
 class PackageGrayExecutorOutputs(Outputs):

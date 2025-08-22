@@ -14,6 +14,11 @@ from sdks.novavision.src.helper.executor import Executor
 from components.PackageGray.src.utils.response import build_response
 from components.PackageGray.src.models.PackageModel import PackageModel
 
+CV2_COLOR_MAP = {
+    "COLOR_BGR2GRAY": cv2.COLOR_BGR2GRAY,
+    "COLOR_GRAY2BGR": cv2.COLOR_GRAY2BGR,
+}
+
 # executor class and file name change
 class PackageGray(Component):
     def __init__(self, request, bootstrap):
@@ -21,6 +26,7 @@ class PackageGray(Component):
         self.request.model = PackageModel(**(self.request.data))
         self.rotation_degree = self.request.get_param("Degree")
         self.keep_side = self.request.get_param("KeepSide")
+        self.color_conversion = self.request.get_param("ColorConversion")
         self.image = self.request.get_param("inputImage")
 
     @staticmethod
@@ -28,7 +34,8 @@ class PackageGray(Component):
         return {}
 
     def grayscale(self, img):
-        return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        conversion = CV2_COLOR_MAP[self.color_conversion]
+        return cv2.cvtColor(img, conversion)
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
