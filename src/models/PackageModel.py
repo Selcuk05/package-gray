@@ -153,8 +153,8 @@ class PackageGrayExecutorTwoOutputs(Outputs):
 
 
 class PackageGrayExecutorTwoRequest(Request):
-    inputs: Optional[PackageGrayExecutorInputs]
-    configs: PackageGrayExecutorConfigs
+    inputs: Optional[PackageGrayExecutorTwoInputs]
+    configs: PackageGrayExecutorTwoConfigs
 
     class Config:
         json_schema_extra = {
@@ -163,7 +163,7 @@ class PackageGrayExecutorTwoRequest(Request):
 
 
 class PackageGrayExecutorTwoResponse(Response):
-    outputs: PackageGrayExecutorOutputs
+    outputs: PackageGrayExecutorTwoOutputs
 
 ### PACKAGE GRAY EXECUTOR 2
 class PackageGrayExecutorTwo(Config):
