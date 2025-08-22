@@ -129,6 +129,37 @@ class PackageGrayExecutor(Config):
 
 #############################################3
 
+class InputImage1(Input):
+    name: Literal["inputImage"] = "inputImage1"
+    value: Union[List[Image], Image]
+    type: str = "object"
+
+    @validator("type", pre=True, always=True)
+    def set_type_based_on_value(cls, value, values):
+        value = values.get('value')
+        if isinstance(value, Image):
+            return "object"
+        elif isinstance(value, list):
+            return "list"
+
+    class Config:
+        title = "Image 1"
+
+class InputImage2(Input):
+    name: Literal["inputImage"] = "inputImage2"
+    value: Union[List[Image], Image]
+    type: str = "object"
+
+    @validator("type", pre=True, always=True)
+    def set_type_based_on_value(cls, value, values):
+        value = values.get('value')
+        if isinstance(value, Image):
+            return "object"
+        elif isinstance(value, list):
+            return "list"
+
+    class Config:
+        title = "Image 2"
 
 class FontSize(Config):
     name: Literal["FontSize"] = "FontSize"
@@ -141,8 +172,8 @@ class FontSize(Config):
         title = "Font Size"
 
 class PackageGrayExecutorTwoInputs(Inputs):
-    inputImage1: InputImage
-    inputImage2: InputImage
+    inputImage1: InputImage1
+    inputImage2: InputImage2
 
 class PackageGrayExecutorTwoConfigs(Configs):
     fontSize: FontSize
