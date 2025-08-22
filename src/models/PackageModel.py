@@ -129,7 +129,7 @@ class PackageGrayExecutor(Config):
 
 #############################################3
 
-"""
+
 class FontSize(Config):
     name: Literal["FontSize"] = "FontSize"
     value: int = Field(ge=0, le=40,default=15)
@@ -174,25 +174,24 @@ class PackageGrayExecutorTwo(Config):
 
     class Config:
         title = "PackageGray2"
-        '''json_schema_extra = {
+        json_schema_extra = {
             "target": {
                 "value": 0
             }
-        }'''
+        }
 ###########################################
-"""
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[PackageGrayExecutor]
+    value: Union[PackageGrayExecutor, PackageGrayExecutorTwo]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
     class Config:
         title = "Task"
-        json_schema_extra = {
+        """json_schema_extra = {
             "target": "value"
-        }
+        }""" # no json schema on multi executor
 
 
 class PackageConfigs(Configs):

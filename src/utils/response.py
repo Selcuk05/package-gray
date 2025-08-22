@@ -1,8 +1,8 @@
 
 from sdks.novavision.src.helper.package import PackageHelper
-from components.Package.src.models.PackageModel import PackageModel, PackageConfigs, ConfigExecutor, PackageGrayExecutorOutputs, PackageGrayExecutorResponse, PackageGrayExecutor, OutputImage
+from components.PackageGray.src.models.PackageModel import PackageModel, PackageConfigs, ConfigExecutor, PackageGrayExecutorOutputs, PackageGrayExecutorResponse, PackageGrayExecutor, OutputImage, PackageGrayExecutorTwoOutputs, PackageGrayExecutorTwoResponse, PackageGrayExecutorTwo
 
-# context = executors/PackageGray.py => PackageGray
+# context = executors/PackageGrayExecutor.py => PackageGray
 def build_response(context):
     outputImage = OutputImage(value=context.image)
     packageGrayExecutorOutputs = PackageGrayExecutorOutputs(outputImage=outputImage)
@@ -15,6 +15,25 @@ def build_response(context):
         packageExecutor = PackageExecutor(value=packageResponse)"""
 
     executor = ConfigExecutor(value=packageGrayExecutor)
+
+    packageConfigs = PackageConfigs(executor=executor)
+    package = PackageHelper(packageModel=PackageModel, packageConfigs=packageConfigs)
+    packageModel = package.build_model(context)
+
+    return packageModel
+
+def build_response_two(context):
+    outputImage = OutputImage(value=context.image1)
+    packageGrayExecutorTwoOutputs = PackageGrayExecutorTwoOutputs(outputImage=outputImage)
+    packageGrayExecutorTwoResponse = PackageGrayExecutorTwoResponse(outputs=packageGrayExecutorTwoOutputs)
+    packageGrayExecutorTwo = PackageGrayExecutorTwo(value=packageGrayExecutorTwoResponse)
+
+
+    """    Outputs = PackageOutputs(outputImage=outputImage)
+        packageResponse = PackageResponse(outputs=Outputs)
+        packageExecutor = PackageExecutor(value=packageResponse)"""
+
+    executor = ConfigExecutor(value=packageGrayExecutorTwo)
 
     packageConfigs = PackageConfigs(executor=executor)
     package = PackageHelper(packageModel=PackageModel, packageConfigs=packageConfigs)
