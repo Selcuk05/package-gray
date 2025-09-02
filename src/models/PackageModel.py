@@ -266,8 +266,7 @@ class Thickness(Config):
     name: Literal["Thickness"] = "Thickness"
     value: Union[Thickness1, Thickness2, Thickness3]
     type: Literal["object"] = "object"
-    field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
-    restart: Literal[True] = True
+    field: Literal["dropdownlist"] = "dropdownlist"
 
     class Config:
         title = "Thickness"
@@ -279,10 +278,9 @@ class PickConfig(Config):
     fontSizeVal: FontSize
     type: Literal["object"] = "object"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
-    restart: Literal[True] = True
 
     class Config:
-        title = "Pick"
+        title = "Pick Params?"
 
 
 class PackageGrayExecutorTwoInputs(Inputs):
