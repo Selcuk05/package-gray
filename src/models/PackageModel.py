@@ -289,8 +289,7 @@ class PackageGrayExecutorTwoInputs(Inputs):
 
 
 class PackageGrayExecutorTwoConfigs(Configs):
-    fontSize: FontSize
-    thickness: Thickness
+    pickConfig: PickConfig
 
 
 class PackageGrayExecutorTwoOutputs(Outputs):
