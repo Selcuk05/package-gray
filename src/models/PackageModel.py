@@ -48,11 +48,42 @@ class OutputImage(Output):
         title = "Image"
 
 
+class MaskNo(Config):
+    name: Literal["No"] = "No"
+    value: Literal[0] = 0
+    type: Literal["int"] = "int"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "No"
+
+
+class MaskYes(Config):
+    name: Literal["Yes"] = "Yes"
+    value: Literal[1] = 1
+    type: Literal["int"] = "int"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "Yes"
+
+
+class Masking(Config):
+    name: Literal["Masking"] = "Masking"
+    value: Union[MaskNo, MaskYes]
+    type: Literal["object"] = "object"
+    field: Literal["dropdownlist"] = "dropdownlist"
+
+    class Config:
+        title = "Apply Mask?"
+
+
 class ColorBGR2GRAY(Config):
     name: Literal["ColorBGR2GRAY"] = "ColorBGR2GRAY"
     value: Literal["COLOR_BGR2GRAY"] = "COLOR_BGR2GRAY"
     type: Literal["string"] = "string"
     field: Literal["option"] = "option"
+    masking: Masking
 
     class Config:
         title = "BGR => GRAY"

@@ -1,12 +1,12 @@
 """
-    It is one of the preprocessing components in which the image is rotated.
+It is one of the preprocessing components in which the image is rotated.
 """
 
 import os
 import cv2
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../'))
+sys.path.append(os.path.join(os.path.dirname(__file__), "../../../../"))
 
 from sdks.novavision.src.media.image import Image
 from sdks.novavision.src.base.component import Component
@@ -19,6 +19,7 @@ CV2_COLOR_MAP = {
     "COLOR_GRAY2BGR": cv2.COLOR_GRAY2BGR,
 }
 
+
 # executor class and file name change
 class PackageGrayExecutor(Component):
     def __init__(self, request, bootstrap):
@@ -27,6 +28,7 @@ class PackageGrayExecutor(Component):
         self.rotation_degree = self.request.get_param("Degree")
         self.keep_side = self.request.get_param("KeepSide")
         self.color_conversion = self.request.get_param("ColorConversion")
+        self.masking = self.request.get_param("Masking")
         self.image = self.request.get_param("inputImage")
 
     @staticmethod
@@ -42,7 +44,18 @@ class PackageGrayExecutor(Component):
 
         img.value = self.grayscale(img.value)
 
-        self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
+        try:
+            if self.masking == 1 and self.color_conversion == "COLOR_BGR2GRAY":
+                _, mask = cv2.threshold(
+                    img.value, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU
+                )
+                img.value = cv2.bitwise_and(img.value, img.value, mask=mask)
+        except Exception:
+            pass
+
+        self.image = Image.set_frame(
+            img=img, package_uID=self.uID, redis_db=self.redis_db
+        )
         packageModel = build_response(context=self)
         return packageModel
 
