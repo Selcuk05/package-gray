@@ -1,7 +1,3 @@
-"""
-It is one of the preprocessing components in which the image is rotated.
-"""
-
 import os
 import cv2
 import sys
@@ -21,8 +17,15 @@ class PackageGrayExecutorTwo(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
-        self.font_size = self.request.get_param("FontSize")
-        self.thickness = self.request.get_param("Thickness")
+
+        self.pick_config = self.request.get_param("PickConfig")
+
+        if self.pick_config == "DefaultPick":
+            self.font_size = 10
+            self.thickness = 3
+        elif self.pick_config == "UserPick":
+            self.font_size = self.request.get_param("FontSize")
+            self.thickness = int(self.request.get_param("Thickness")[-1])
 
         self.image1 = self.request.get_param("inputImage1")
         self.image2 = self.request.get_param("inputImage2")
@@ -85,14 +88,12 @@ class PackageGrayExecutorTwo(Component):
 
     def apply_text(self, img):
         try:
-            font_size = self.font_size
-            thickness = int(self.thickness[-1])  # NOTE: cant find another way :D
             text = "MERGED"
             font = cv2.FONT_HERSHEY_SIMPLEX
 
             height, width = img.shape[:2]
             (text_width, text_height), baseline = cv2.getTextSize(
-                text, font, font_size, thickness
+                text, font, self.font_size, self.thickness
             )
 
             x = (width - text_width) // 2
@@ -103,9 +104,9 @@ class PackageGrayExecutorTwo(Component):
                 text,
                 (x, y),
                 font,
-                font_size,
+                self.font_size,
                 (255, 255, 255),
-                thickness,
+                self.thickness,
                 cv2.LINE_AA,
             )
             return img

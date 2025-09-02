@@ -275,7 +275,6 @@ class Thickness(Config):
 class DefaultPick(Config):
     name: Literal["DefaultPick"] = "DefaultPick"
     value: Literal[0] = 0
-    # TODO: default picked values
     type: Literal["int"] = "int"
     field: Literal["option"] = "option"
 
