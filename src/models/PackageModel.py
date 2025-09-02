@@ -273,6 +273,17 @@ class Thickness(Config):
         title = "Thickness"
 
 
+class PickConfig(Config):
+    name: Literal["PickConfig"] = "PickConfig"
+    value: Union[Thickness, FontSize]
+    type: Literal["object"] = "object"
+    field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
+    restart: Literal[True] = True
+
+    class Config:
+        title = "Pick"
+
+
 class PackageGrayExecutorTwoInputs(Inputs):
     inputImage1: InputImage1
     inputImage2: InputImage2
