@@ -1,12 +1,12 @@
 """
-    It is one of the preprocessing components in which the image is rotated.
+It is one of the preprocessing components in which the image is rotated.
 """
 
 import os
 import cv2
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../'))
+sys.path.append(os.path.join(os.path.dirname(__file__), "../../../../"))
 
 from sdks.novavision.src.media.image import Image
 from sdks.novavision.src.base.component import Component
@@ -14,13 +14,14 @@ from sdks.novavision.src.helper.executor import Executor
 from components.PackageGray.src.utils.response import build_response_two
 from components.PackageGray.src.models.PackageModel import PackageModel
 
+
 # executor class and file name change
-class PackageGrayTwo(Component):
+class PackageGrayExecutorTwo(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
-        self.font_size = self.request.get_param('FontSize')
-        self.thickness = self.request.get_param('Thickness')
+        self.font_size = self.request.get_param("FontSize")
+        self.thickness = self.request.get_param("Thickness")
 
         self.image1 = self.request.get_param("inputImage1")
         self.image2 = self.request.get_param("inputImage2")
@@ -41,7 +42,7 @@ class PackageGrayTwo(Component):
             self.font_size,
             (255, 255, 255),
             self.thickness,
-            cv2.LINE_AA
+            cv2.LINE_AA,
         )
         return img
 
@@ -52,8 +53,12 @@ class PackageGrayTwo(Component):
         img1.value = self.merge_imgs(img1.value, img2.value)
         img1.value = self.apply_text(img1.value)
 
-        self.image1 = Image.set_frame(img=img1, package_uID=self.uID, redis_db=self.redis_db) # for video view
-        self.image2 = Image.set_frame(img=img1, package_uID=self.uID, redis_db=self.redis_db) # for file save
+        self.image1 = Image.set_frame(
+            img=img1, package_uID=self.uID, redis_db=self.redis_db
+        )  # for video view
+        self.image2 = Image.set_frame(
+            img=img1, package_uID=self.uID, redis_db=self.redis_db
+        )  # for file save
         packageModel = build_response_two(context=self)
         return packageModel
 

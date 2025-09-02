@@ -1,7 +1,17 @@
-
 from pydantic import Field, validator
 from typing import List, Optional, Union, Literal
-from sdks.novavision.src.base.model import Package, Image, Inputs, Configs, Outputs, Response, Request, Output, Input, Config
+from sdks.novavision.src.base.model import (
+    Package,
+    Image,
+    Inputs,
+    Configs,
+    Outputs,
+    Response,
+    Request,
+    Output,
+    Input,
+    Config,
+)
 
 
 class InputImage(Input):
@@ -11,7 +21,7 @@ class InputImage(Input):
 
     @validator("type", pre=True, always=True)
     def set_type_based_on_value(cls, value, values):
-        value = values.get('value')
+        value = values.get("value")
         if isinstance(value, Image):
             return "object"
         elif isinstance(value, list):
@@ -23,12 +33,12 @@ class InputImage(Input):
 
 class OutputImage(Output):
     name: Literal["outputImage"] = "outputImage"
-    value: Union[List[Image],Image]
+    value: Union[List[Image], Image]
     type: str = "object"
 
     @validator("type", pre=True, always=True)
     def set_type_based_on_value(cls, value, values):
-        value = values.get('value')
+        value = values.get("value")
         if isinstance(value, Image):
             return "object"
         elif isinstance(value, list):
@@ -36,6 +46,7 @@ class OutputImage(Output):
 
     class Config:
         title = "Image"
+
 
 class ColorBGR2GRAY(Config):
     name: Literal["ColorBGR2GRAY"] = "ColorBGR2GRAY"
@@ -46,6 +57,7 @@ class ColorBGR2GRAY(Config):
     class Config:
         title = "BGR => GRAY"
 
+
 class ColorGRAY2BGR(Config):
     name: Literal["ColorGRAY2BGR"] = "ColorGRAY2BGR"
     value: Literal["COLOR_GRAY2BGR"] = "COLOR_GRAY2BGR"
@@ -54,6 +66,7 @@ class ColorGRAY2BGR(Config):
 
     class Config:
         title = "GRAY => BGR"
+
 
 class ColorConversion(Config):
     name: Literal["ColorConversion"] = "ColorConversion"
@@ -88,8 +101,9 @@ class KeepSideTrue(Config):
 
 class KeepSideBBox(Config):
     """
-        Rotate image without catting off sides.
+    Rotate image without catting off sides.
     """
+
     name: Literal["KeepSide"] = "KeepSide"
     value: Union[KeepSideTrue, KeepSideFalse]
     type: Literal["object"] = "object"
@@ -101,10 +115,11 @@ class KeepSideBBox(Config):
 
 class Degree(Config):
     """
-        Positive angles specify counterclockwise rotation while negative angles indicate clockwise rotation.
+    Positive angles specify counterclockwise rotation while negative angles indicate clockwise rotation.
     """
+
     name: Literal["Degree"] = "Degree"
-    value: int = Field(ge=-359.0, le=359.0,default=0)
+    value: int = Field(ge=-359.0, le=359.0, default=0)
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
     placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
@@ -132,13 +147,12 @@ class PackageGrayExecutorRequest(Request):
     configs: PackageGrayExecutorConfigs
 
     class Config:
-        json_schema_extra = {
-            "target": "configs"
-        }
+        json_schema_extra = {"target": "configs"}
 
 
 class PackageGrayExecutorResponse(Response):
     outputs: PackageGrayExecutorOutputs
+
 
 ### PACKAGE GRAY EXECUTOR 1
 class PackageGrayExecutor(Config):
@@ -149,14 +163,11 @@ class PackageGrayExecutor(Config):
 
     class Config:
         title = "PackageGray"
-        json_schema_extra = {
-            "target": {
-                "value": 0
-            }
-        }
+        json_schema_extra = {"target": {"value": 0}}
 
 
 #############################################3
+
 
 class InputImage1(Input):
     name: Literal["inputImage1"] = "inputImage1"
@@ -165,7 +176,7 @@ class InputImage1(Input):
 
     @validator("type", pre=True, always=True)
     def set_type_based_on_value(cls, value, values):
-        value = values.get('value')
+        value = values.get("value")
         if isinstance(value, Image):
             return "object"
         elif isinstance(value, list):
@@ -174,6 +185,7 @@ class InputImage1(Input):
     class Config:
         title = "Image 1"
 
+
 class InputImage2(Input):
     name: Literal["inputImage2"] = "inputImage2"
     value: Union[List[Image], Image]
@@ -181,7 +193,7 @@ class InputImage2(Input):
 
     @validator("type", pre=True, always=True)
     def set_type_based_on_value(cls, value, values):
-        value = values.get('value')
+        value = values.get("value")
         if isinstance(value, Image):
             return "object"
         elif isinstance(value, list):
@@ -190,14 +202,15 @@ class InputImage2(Input):
     class Config:
         title = "Image 2"
 
+
 class OutputImage2(Output):
     name: Literal["outputImage2"] = "outputImage2"
-    value: Union[List[Image],Image]
+    value: Union[List[Image], Image]
     type: str = "object"
 
     @validator("type", pre=True, always=True)
     def set_type_based_on_value(cls, value, values):
-        value = values.get('value')
+        value = values.get("value")
         if isinstance(value, Image):
             return "object"
         elif isinstance(value, list):
@@ -206,15 +219,17 @@ class OutputImage2(Output):
     class Config:
         title = "Image 2"
 
+
 class FontSize(Config):
     name: Literal["FontSize"] = "FontSize"
-    value: int = Field(ge=0, le=40,default=15)
+    value: int = Field(ge=0, le=40, default=15)
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
     placeHolder: Literal["[0, 40]"] = "[0, 40]"
 
     class Config:
         title = "Font Size"
+
 
 ### dependent dropdown thickness
 class Thickness1(Config):
@@ -226,6 +241,7 @@ class Thickness1(Config):
     class Config:
         title = "1"
 
+
 class Thickness2(Config):
     name: Literal["Thickness2"] = "Thickness2"
     value: Literal[2] = 2
@@ -235,6 +251,7 @@ class Thickness2(Config):
     class Config:
         title = "2"
 
+
 class Thickness3(Config):
     name: Literal["Thickness3"] = "Thickness3"
     value: Literal[3] = 3
@@ -243,6 +260,7 @@ class Thickness3(Config):
 
     class Config:
         title = "3"
+
 
 class Thickness(Config):
     name: Literal["Thickness"] = "Thickness"
@@ -259,6 +277,7 @@ class PackageGrayExecutorTwoInputs(Inputs):
     inputImage1: InputImage1
     inputImage2: InputImage2
 
+
 class PackageGrayExecutorTwoConfigs(Configs):
     fontSize: FontSize
     thickness: Thickness
@@ -274,13 +293,12 @@ class PackageGrayExecutorTwoRequest(Request):
     configs: PackageGrayExecutorTwoConfigs
 
     class Config:
-        json_schema_extra = {
-            "target": "configs"
-        }
+        json_schema_extra = {"target": "configs"}
 
 
 class PackageGrayExecutorTwoResponse(Response):
     outputs: PackageGrayExecutorTwoOutputs
+
 
 ### PACKAGE GRAY EXECUTOR 2
 class PackageGrayExecutorTwo(Config):
@@ -291,12 +309,11 @@ class PackageGrayExecutorTwo(Config):
 
     class Config:
         title = "PackageGray2"
-        json_schema_extra = {
-            "target": {
-                "value": 0
-            }
-        }
+        json_schema_extra = {"target": {"value": 0}}
+
+
 ###########################################
+
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
@@ -308,7 +325,7 @@ class ConfigExecutor(Config):
         title = "Task"
         """json_schema_extra = {
             "target": "value"
-        }""" # no json schema on multi executor
+        }"""  # no json schema on multi executor
 
 
 class PackageConfigs(Configs):
@@ -317,5 +334,5 @@ class PackageConfigs(Configs):
 
 class PackageModel(Package):
     configs: PackageConfigs
-    type: Literal["capsule"] = "capsule"
+    type: Literal["component"] = "component"
     name: Literal["PackageGray"] = "PackageGray"

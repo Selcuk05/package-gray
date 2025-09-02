@@ -20,7 +20,7 @@ CV2_COLOR_MAP = {
 }
 
 # executor class and file name change
-class PackageGray(Component):
+class PackageGrayExecutor(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
