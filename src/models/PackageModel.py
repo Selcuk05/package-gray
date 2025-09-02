@@ -272,10 +272,31 @@ class Thickness(Config):
         title = "Thickness"
 
 
-class PickConfig(Config):
-    name: Literal["PickConfig"] = "PickConfig"
+class DefaultPick(Config):
+    name: Literal["DefaultPick"] = "DefaultPick"
+    value: Literal[0] = 0
+    type: Literal["int"] = "int"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "Default"
+
+
+class UserPick(Config):
+    name: Literal["UserPick"] = "UserPick"
+    value: Literal[1] = 1
     thicknessVal: Thickness
     fontSizeVal: FontSize
+    type: Literal["int"] = "int"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "User"
+
+
+class PickConfig(Config):
+    name: Literal["PickConfig"] = "PickConfig"
+    value: Union[DefaultPick, UserPick]
     type: Literal["object"] = "object"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
