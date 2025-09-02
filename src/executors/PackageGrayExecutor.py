@@ -45,11 +45,9 @@ class PackageGrayExecutor(Component):
         img.value = self.grayscale(img.value)
 
         try:
-            if self.masking == 1 and self.color_conversion == "COLOR_BGR2GRAY":
-                _, mask = cv2.threshold(
-                    img.value, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU
-                )
-                img.value = cv2.bitwise_and(img.value, img.value, mask=mask)
+            if self.masking == "Yes" and self.color_conversion == "COLOR_BGR2GRAY":
+                print("mask done")
+                _, img.value = cv2.threshold(img.value, 128, 255, cv2.THRESH_BINARY)
         except Exception:
             pass
 
