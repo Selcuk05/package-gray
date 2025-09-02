@@ -61,13 +61,19 @@ class PackageGrayExecutorTwo(Component):
             img1_norm, img2_norm = self.normalize_images(img1, img2)
 
             if img1_norm.shape[0] != img2_norm.shape[0]:
-                raise ValueError(f"Image heights don't match: {img1_norm.shape[0]} vs {img2_norm.shape[0]}")
+                raise ValueError(
+                    f"Image heights don't match: {img1_norm.shape[0]} vs {img2_norm.shape[0]}"
+                )
 
             if img1_norm.dtype != img2_norm.dtype:
-                raise ValueError(f"Image dtypes don't match: {img1_norm.dtype} vs {img2_norm.dtype}")
+                raise ValueError(
+                    f"Image dtypes don't match: {img1_norm.dtype} vs {img2_norm.dtype}"
+                )
 
             if len(img1_norm.shape) != len(img2_norm.shape):
-                raise ValueError(f"Image dimensions don't match: {len(img1_norm.shape)} vs {len(img2_norm.shape)}")
+                raise ValueError(
+                    f"Image dimensions don't match: {len(img1_norm.shape)} vs {len(img2_norm.shape)}"
+                )
 
             return cv2.hconcat([img1_norm, img2_norm])
 
@@ -80,12 +86,14 @@ class PackageGrayExecutorTwo(Component):
     def apply_text(self, img):
         try:
             font_size = self.font_size
-            thickness = int(self.thickness[-1]) # NOTE: cant find another way :D
+            thickness = int(self.thickness[-1])  # NOTE: cant find another way :D
             text = "MERGED"
             font = cv2.FONT_HERSHEY_SIMPLEX
 
             height, width = img.shape[:2]
-            (text_width, text_height), baseline = cv2.getTextSize(text, font, font_size, thickness)
+            (text_width, text_height), baseline = cv2.getTextSize(
+                text, font, font_size, thickness
+            )
 
             x = (width - text_width) // 2
             y = (height + text_height) // 2

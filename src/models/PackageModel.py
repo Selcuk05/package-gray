@@ -275,7 +275,8 @@ class Thickness(Config):
 
 class PickConfig(Config):
     name: Literal["PickConfig"] = "PickConfig"
-    value: Union[Thickness, FontSize]
+    thicknessVal: Thickness
+    fontSizeVal: FontSize
     type: Literal["object"] = "object"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
     restart: Literal[True] = True
